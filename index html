@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBusiness - اربح المكافآت</title>
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Tahoma', Arial, sans-serif;
+            background-color: #0D1117;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            padding: 40px 20px;
+            background: linear-gradient(145deg, #161b22, #0D1117);
+            border-radius: 24px;
+            border: 1px solid #30363d;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+            margin-bottom: 24px;
+            background: #CDF0B4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #CDF0B4, #a8d8ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+        p {
+            color: #8b949e;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+        .btn {
+            display: inline-block;
+            background: #CDF0B4;
+            color: #0D1117;
+            padding: 14px 40px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(205, 240, 180, 0.3);
+        }
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin: 24px 0;
+        }
+        .feature {
+            background: #161b22;
+            padding: 16px 8px;
+            border-radius: 12px;
+            border: 1px solid #30363d;
+            font-size: 12px;
+            color: #8b949e;
+        }
+        .feature span {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        .footer {
+            margin-top: 24px;
+            font-size: 12px;
+            color: #484f58;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">💰</div>
+        <h1>MyBusiness</h1>
+        <p>اربح مكافآت حقيقية من خلال مشاهدة إعلانات الفيديو القصيرة. اجمع العملات والجواهر والنقاط، وحوّلها إلى هدايا وجوائز!</p>
+        
+        <div class="features">
+            <div class="feature">
+                <span>🪙</span>
+                عملات
+            </div>
+            <div class="feature">
+                <span>💎</span>
+                جواهر
+            </div>
+            <div class="feature">
+                <span>🎁</span>
+                جوائز
+            </div>
+        </div>
+
+        <a href="#" class="btn">ابدأ الآن</a>
+        <div class="footer">© 2026 MyBusiness - جميع الحقوق محفوظة</div>
+    </div>
+
+    <script>
+        // تسجيل Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('✅ Service Worker registered successfully!'))
+                .catch((err) => console.log('❌ Service Worker registration failed:', err));
+        }
+    </script>
+</body>
+</html>
