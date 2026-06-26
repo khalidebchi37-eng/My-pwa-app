@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>MyBusiness - اربح المكافآت</title>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#0D1117" />
+    <style>
+        /* ===== إعادة ضبط عام ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: #0D1117;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+        }
+        .app-container {
+            max-width: 420px;
+            width: 100%;
+            background: #161b22;
+            border-radius: 28px;
+            padding: 20px 16px 30px;
+            border: 1px solid #30363d;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+
+        /* ===== شريط اللغة والاسم ===== */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .lang-selector {
+            display: flex;
+            gap: 8px;
+        }
+        .lang-selector button {
+            background: transparent;
+            border: 1px solid #30363d;
+            color: #8b949e;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .lang-selector button.active {
+            border-color: #CDF0B4;
+            color: #CDF0B4;
+            background: rgba(205, 240, 180, 0.1);
+        }
+        .app-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #CDF0B4;
+            letter-spacing: 1px;
+        }
+
+        /* ===== الرصيد ===== */
+        .balance-section {
+            background: linear-gradient(145deg, #1c2333, #0D1117);
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid #30363d;
+            margin-bottom: 16px;
+        }
+        .balance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 6px;
+            text-align: center;
+        }
+        .balance-item {
+            background: #0D1117;
+            border-radius: 12px;
+            padding: 10px 4px;
+            border: 1px solid #30363d;
+        }
+        .balance-item .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #CDF0B4;
+        }
+        .balance-item .label {
+            font-size: 10px;
+            color: #8b949e;
+            margin-top: 2px;
+        }
+        .balance-item .sub {
+            font-size: 10px;
+            color: #ffd700;
+        }
+        .balance-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #8b949e;
+            border-top: 1px solid #30363d;
+            padding-top: 10px;
+        }
+        .balance-footer .level {
+            color: #CDF0B4;
+            font-weight: 600;
+        }
+        .balance-footer .rate {
+            color: #ffd700;
+        }
+
+        /* ===== أزرار الربح ===== */
+        .earn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .earn-btn {
+            background: linear-gradient(145deg, #1c2333, #0D1117);
+            border: 1px solid #30363d;
+            border-radius: 16px;
+            padding: 14px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            color: #fff;
+        }
+        .earn-btn:hover {
+            border-color: #CDF0B4;
+            transform: scale(1.02);
+        }
+        .earn-btn .icon {
+            font-size: 28px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .earn-btn .reward {
+            font-size: 14px;
+            font-weight: 700;
+            color: #CDF0B4;
+        }
+        .earn-btn .desc {
+            font-size: 11px;
+            color: #8b949e;
+        }
+
+        /* ===== عجلة الحظ ===== */
+        .wheel-section {
+            background: linear-gradient(145deg, #1c2333, #0D1117);
+            border-radius: 16px;
+            padding: 12px;
+            border: 1px solid #30363d;
+            margin: 12px 0;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .wheel-section:hover {
+            border-color: #ffd700;
+        }
+        .wheel-section .wheel-icon {
+            font-size: 36px;
+        }
+        .wheel-section .wheel-label {
+            font-size: 14px;
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        /* ===== تحديات اليوم ===== */
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #CDF0B4;
+            margin: 16px 0 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .challenge-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0D1117;
+            border-radius: 12px;
+            padding: 10px 14px;
+            border: 1px solid #30363d;
+            margin-bottom: 8px;
+            transition: 0.3s;
+        }
+        .challenge-item .info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .challenge-item .info .title {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .challenge-item .info .sub {
+            font-size: 11px;
+            color: #8b949e;
+        }
+        .challenge-item .reward {
+            color: #CDF0B4;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* ===== الإنجازات ===== */
+        .achievement-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0D1117;
+            border-radius: 12px;
+            padding: 10px 14px;
+            border: 1px solid #30363d;
+            margin-bottom: 8px;
+        }
+        .achievement-item .info .title {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .achievement-item .info .sub {
+            font-size: 11px;
+            color: #8b949e;
+        }
+        .achievement-item .badge {
+            font-size: 24px;
+        }
+
+        /* ===== المزيد ===== */
+        .more-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 12px 0;
+        }
+        .more-item {
+            background: #0D1117;
+            border-radius: 12px;
+            padding: 12px 8px;
+            border: 1px solid #30363d;
+            text-align: center;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .more-item:hover {
+            border-color: #CDF0B4;
+        }
+        .more-item .icon {
+            font-size: 22px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .more-item .highlight {
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        /* ===== خدمات احترافية ===== */
+        .services-section {
+            margin-top: 16px;
+            background: linear-gradient(145deg, #1c2333, #0D1117);
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid #30363d;
+        }
+        .services-section .service-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #CDF0B4;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #30363d;
+            font-size: 13px;
+        }
+        .service-item .price {
+            color: #CDF0B4;
+            font-weight: 600;
+        }
+
+        /* ===== زر دعم التطبيق ===== */
+        .support-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border: none;
+            border-radius: 40px;
+            padding: 12px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            margin: 12px 0;
+            transition: 0.3s;
+            letter-spacing: 1px;
+        }
+        .support-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+        }
+
+        /* ===== رسالة عدم الاتصال ===== */
+        .offline-banner {
+            display: none;
+            background: #ff6b6b;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .offline-banner.show {
+            display: block;
+        }
+
+        /* ===== زر السحب ===== */
+        .withdraw-btn {
+            background: linear-gradient(135deg, #CDF0B4, #a8d8ea);
+            color: #0D1117;
+            border: none;
+            border-radius: 40px;
+            padding: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 8px;
+        }
+        .withdraw-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(205, 240, 180, 0.3);
+        }
+
+        /* ===== تذييل ===== */
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: #484f58;
+            margin-top: 16px;
+            border-top: 1px solid #30363d;
+            padding-top: 14px;
+        }
+        .footer a {
+            color: #CDF0B4;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container" id="app">
+        <!-- ===== شريط الإشعارات ===== -->
+        <div id="offlineBanner" class="offline-banner">⚠️ أنت غير متصل بالإنترنت</div>
+
+        <!-- ===== الشريط العلوي ===== -->
+        <div class="top-bar">
+            <div class="lang-selector">
+                <button class="active" onclick="switchLang('ar')">عربي</button>
+                <button onclick="switchLang('en')">English</button>
+                <button onclick="switchLang('fr')">Français</button>
+            </div>
+            <div class="app-name">MyBusiness</div>
+        </div>
+
+        <!-- ===== الرصيد ===== -->
+        <div class="balance-section">
+            <div class="balance-grid">
+                <div class="balance-item">
+                    <div class="value" id="coins">250</div>
+                    <div class="label">عملات</div>
+                </div>
+                <div class="balance-item">
+                    <div class="value" id="gems">15</div>
+                    <div class="label">جواهر</div>
+                </div>
+                <div class="balance-item">
+                    <div class="value" id="points">0</div>
+                    <div class="label">نقاط</div>
+                </div>
+                <div class="balance-item">
+                    <div class="value" id="withdrawBalance">400</div>
+                    <div class="label">رصيد السحب (دج)</div>
+                </div>
+            </div>
+            <div class="balance-footer">
+                <span class="level">المستوى: برونزي</span>
+                <span class="rate">💎 جوهرة = 10 عملات = 10 دج</span>
+            </div>
+        </div>
+
+        <!-- ===== أزرار الربح ===== -->
+        <div class="earn-grid">
+            <div class="earn-btn" onclick="earn('coins', 50)">
+                <span class="icon">📺</span>
+                <span class="reward">+50 عملة</span>
+                <span class="desc">شاهد إعلان</span>
+            </div>
+            <div class="earn-btn" onclick="earn('gems', 5)">
+                <span class="icon">💎</span>
+                <span class="reward">+5 جواهر</span>
+                <span class="desc">شاهد إعلان</span>
+            </div>
+            <div class="earn-btn" onclick="earn('points', 10)">
+                <span class="icon">🎮</span>
+                <span class="reward">+10 نقاط</span>
+                <span class="desc">العب لعبة</span>
+            </div>
+            <div class="earn-btn" onclick="dailyReward()">
+                <span class="icon">🎁</span>
+                <span class="reward">+100 عملة</span>
+                <span class="desc">مكافأة يومية</span>
+            </div>
+        </div>
+
+        <!-- ===== عجلة الحظ ===== -->
+        <div class="wheel-section" onclick="spinWheel()">
+            <span class="wheel-icon">🎡</span>
+            <div class="wheel-label">🎡 عجلة الحظ 🎡</div>
+            <div style="font-size:12px;color:#8b949e;">اضغط للدوران</div>
+        </div>
+
+        <!-- ===== تحديات اليوم ===== -->
+        <div class="section-title">
+            <span>🏆 تحديات اليوم</span>
+            <span style="font-size:12px;color:#8b949e;">تحديث يومي</span>
+        </div>
+        <div class="challenge-item">
+            <div class="info">
+                <span class="title">📺 شاهد 5 إعلانات</span>
+                <span class="sub">تقدم: 0/5</span>
+            </div>
+            <span class="reward">+50 عملة</span>
+        </div>
+        <div class="challenge-item">
+            <div class="info">
+                <span class="title">🎮 العب لعبة 3 مرات</span>
+                <span class="sub">تقدم: 0/3</span>
+            </div>
+            <span class="reward">+30 نقطة</span>
+        </div>
+        <div class="challenge-item">
+            <div class="info">
+                <span class="title">📤 شارك التطبيق</span>
+                <span class="sub">ادعُ أصدقاءك</span>
+            </div>
+            <span class="reward">+100 عملة</span>
+        </div>
+
+        <!-- ===== الإنجازات ===== -->
+        <div class="section-title">
+            <span>🏅 الإنجازات</span>
+        </div>
+        <div class="achievement-item">
+            <div class="info">
+                <span class="title">👀 أول مشاهدة</span>
+                <span class="sub">شاهد أول إعلان</span>
+            </div>
+            <span class="badge">🏅</span>
+        </div>
+        <div class="achievement-item">
+            <div class="info">
+                <span class="title">📺 مشاهدة 100</span>
+                <span class="sub">شاهد 100 إعلان</span>
+            </div>
+            <span class="badge">🏅</span>
+        </div>
+        <div class="achievement-item">
+            <div class="info">
+                <span class="title">🪙 عملة 1000</span>
+                <span class="sub">اجمع 1000 عملة</span>
+            </div>
+            <span class="badge">🏅</span>
+        </div>
+
+        <!-- ===== المزيد ===== -->
+        <div class="section-title">
+            <span>📌 المزيد</span>
+        </div>
+        <div class="more-grid">
+            <div class="more-item" onclick="withdraw()">
+                <span class="icon">💳</span>
+                طلب سحب الأرباح
+            </div>
+            <div class="more-item" onclick="shareApp()">
+                <span class="icon">📤</span>
+                مشاركة التطبيق
+            </div>
+            <div class="more-item" onclick="earn('coins', 25)">
+                <span class="icon">📺</span>
+                إعلان إضافي
+                <span class="highlight">+25</span>
+            </div>
+            <div class="more-item" onclick="peakTime()">
+                <span class="icon">⏰</span>
+                وقت الذروة
+                <span class="highlight">مضاعفة الأرباح</span>
+            </div>
+        </div>
+
+        <!-- ===== خدمات احترافية ===== -->
+        <div class="services-section">
+            <div class="service-title">🛠️ خدماتنا الاحترافية</div>
+            <div class="service-item"><span>تطوير تطبيقات</span><span class="price">$300</span></div>
+            <div class="service-item"><span>تصميم مواقع</span><span class="price">$150</span></div>
+            <div class="service-item"><span>تصميم واجهات</span><span class="price">$100</span></div>
+            <div class="service-item"><span>أتمتة</span><span class="price">$80</span></div>
+            <div class="service-item"><span>استشارات</span><span class="price">$40 / ساعة</span></div>
+            <div class="service-item"><span>صيانة ودعم</span><span class="price">$30 / شهري</span></div>
+        </div>
+
+        <!-- ===== دعم التطبيق ===== -->
+        <button class="support-btn" onclick="supportApp()">❤️❤️❤️ ادعم التطبيق ❤️❤️❤️</button>
+
+        <!-- ===== زر السحب ===== -->
+        <button class="withdraw-btn" onclick="withdraw()">💰 طلب سحب الأرباح</button>
+
+        <!-- ===== تذييل ===== -->
+        <div class="footer">
+            © 2026 MyBusiness - جميع الحقوق محفوظة<br />
+            <a href="https://my-business-648s.onrender.com" target="_blank">my-business-648s.onrender.com</a>
+        </div>
+    </div>
+
+    <script>
+        // =============================================
+        // 1. تسجيل Service Worker
+        // =============================================
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('✅ Service Worker registered'))
+                .catch((err) => console.log('❌ SW registration failed:', err));
+        }
+
+        // =============================================
+        // 2. حالة الاتصال
+        // =============================================
+        function updateOnlineStatus() {
+            const banner = document.getElementById('offlineBanner');
+            if (!navigator.onLine) {
+                banner.classList.add('show');
+                banner.textContent = '⚠️ أنت غير متصل بالإنترنت - بعض الميزات غير متاحة';
+            } else {
+                banner.classList.remove('show');
+            }
+        }
+        updateOnlineStatus();
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+
+        // =============================================
+        // 3. إدارة الرصيد
+        // =============================================
+        let state = {
+            coins: 250,
+            gems: 15,
+            points: 0,
+            withdraw: 400
+        };
+
+        function updateUI() {
+            document.getElementById('coins').textContent = state.coins;
+            document.getElementById('gems').textContent = state.gems;
+            document.getElementById('points').textContent = state.points;
+            document.getElementById('withdrawBalance').textContent = state.withdraw;
+        }
+
+        function earn(type, amount) {
+            if (!navigator.onLine) {
+                alert('⚠️ أنت غير متصل بالإنترنت. يرجى الاتصال بالشبكة.');
+                return;
+            }
+            if (type === 'coins') {
+                state.coins += amount;
+                state.withdraw += Math.floor(amount * 0.8);
+            } else if (type === 'gems') {
+                state.gems += amount;
+                state.coins += amount * 10;
+                state.withdraw += amount * 8;
+            } else if (type === 'points') {
+                state.points += amount;
+            }
+            updateUI();
+            showToast(`🎉 +${amount} ${type === 'coins' ? 'عملة' : type === 'gems' ? 'جوهرة' : 'نقطة'}`);
+        }
+
+        function dailyReward() {
+            if (!navigator.onLine) {
+                alert('⚠️ أنت غير متصل بالإنترنت.');
+                retur
